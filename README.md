@@ -13,6 +13,8 @@ This is still very much a work in progress. Developing on Ubuntu 16.04 and 18.04
 sudo apt-get install libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev libgstrtspserver-1.0-dev 
 ```
 
+- [NVIDIA Video Codec SDK installed as GStreamer plugins](https://gist.github.com/corenel/a615b6f7eb5b5425aa49343a7b409200)
+
 ## Build into your catkin workspace
 Navigate to your catkin workspace `src` folder. I.e. `cd ~/catkin_ws/src`.
 Clone this package to the repository:
