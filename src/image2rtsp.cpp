@@ -16,8 +16,12 @@ using namespace image2rtsp;
 void Image2RTSPNodelet::onInit() {
   string pipeline, mountpoint, bitrate, caps;
   string pipeline_tail =
-      " key-int-max=30 ! video/x-h264, profile=baseline ! rtph264pay name=pay0 "
-      "pt=96 )";  // Gets completed based on rosparams below
+      " ! video/x-h264, profile=baseline ! rtph264pay name=pay0 pt=96 )";  // Gets
+                                                                           // completed
+                                                                           // based
+                                                                           // on
+                                                                           // rosparams
+                                                                           // below
 
   NODELET_DEBUG("Initializing image2rtsp nodelet...");
 
@@ -52,8 +56,12 @@ void Image2RTSPNodelet::onInit() {
     // uvc camera?
     if (stream["type"] == "cam") {
       pipeline = "( " + static_cast<std::string>(stream["source"]) +
-                 " ! x264enc tune=zerolatency bitrate=" + bitrate +
-                 pipeline_tail;
+                 " ! nvh264enc preset=3 gop-size=30 bitrate=" + bitrate +
+                 " ! h264parse" + pipeline_tail;
+      // pipeline = "( " + static_cast<std::string>(stream["source"]) + " !
+      // x264enc tune=zerolatency key-int-max=30 bitrate=" + bitrate + " !
+      // h264parse" + pipeline_tail;
+      std::cout << pipeline << std::endl;
 
       rtsp_server_add_url(mountpoint.c_str(), pipeline.c_str(), NULL);
     }
@@ -66,12 +74,22 @@ void Image2RTSPNodelet::onInit() {
       caps = static_cast<std::string>(stream["caps"]);
 
       // Setup the full pipeline
+      // pipeline =
+      //     "( appsrc name=imagesrc do-timestamp=true min-latency=0 "
+      //     "max-latency=0 max-bytes=1000 is-live=true ! videoconvert ! "
+      //     "videoscale ! " +
+      //     caps +
+      //     " ! x264enc tune=zerolatency key-int-max=30 bitrate=" + bitrate +
+      //     pipeline_tail;
+
       pipeline =
           "( appsrc name=imagesrc do-timestamp=true min-latency=0 "
           "max-latency=0 max-bytes=1000 is-live=true ! videoconvert ! "
           "videoscale ! " +
-          caps + " ! x264enc tune=zerolatency bitrate=" + bitrate +
-          pipeline_tail;
+          caps + " ! nvh264enc preset=3 gop-size=30 bitrate=" + bitrate +
+          " ! h264parse" + pipeline_tail;
+
+      std::cout << pipeline << std::endl;
 
       // Add the pipeline to the rtsp server
       rtsp_server_add_url(mountpoint.c_str(), pipeline.c_str(),
