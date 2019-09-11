@@ -1,7 +1,6 @@
 #include <gst/app/gstappsrc.h>
 #include <gst/gst.h>
 #include <gst/rtsp-server/rtsp-server.h>
-#include <image2rtsp.h>
 #include <nodelet/nodelet.h>
 #include <ros/ros.h>
 #include <stdint.h>
@@ -10,6 +9,8 @@
 #include <unistd.h>
 #include <string>
 #include "sensor_msgs/Image.h"
+
+#include <image2rtsp.h>
 
 using namespace std;
 using namespace image2rtsp;

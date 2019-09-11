@@ -1,6 +1,18 @@
 #ifndef IMAGE_TO_RTSP_H
 #define IMAGE_TO_RTSP_H
 
+#include <gst/app/gstappsrc.h>
+#include <gst/gst.h>
+#include <gst/rtsp-server/rtsp-server.h>
+#include <nodelet/nodelet.h>
+#include <ros/ros.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <string>
+#include "sensor_msgs/Image.h"
+
 namespace image2rtsp {
 class Image2RTSPNodelet : public nodelet::Nodelet {
  public:

@@ -38,6 +38,7 @@ streams: # Cannot rename - must leave this as is.
   # Example v4l2 camera stream
   stream-x:                 # Can name this whatever you choose
     type: cam               # cam - Will not look in ROS for a image. The video src is set in the 'source' parameter.
+    codec: cam              # codec - Which codec to encode the stream. Currently support `x264enc` and `nvh264enc`
     source: "v4l2src device=/dev/video0 ! videoconvert ! videoscale ! video/x-raw,framerate=15/1,width=1280,height=720"  # Should work with most valid gstreamer piplines (ending with raw video) 
     mountpoint: /front      # Choose the mountpoint for the rtsp stream. This will be able to be accessed from rtsp://<server_ip>/front
     bitrate: 800            # bitrate for the h264 encoding.
@@ -45,6 +46,7 @@ streams: # Cannot rename - must leave this as is.
   # Example ROS Image topic stream
   this-is-stream-42:        # Can name this whatever you choose
     type: topic             # topic - Image is sourced from a sensor_msgs::Image topic
+    codec: cam              # codec - Which codec to encode the stream. Currently support `x264enc` and `nvh264enc`
     source: /usb_cam0/image_raw  # The ROS topic to subscribe to
     mountpoint: /back      # Choose the mountpoint for the rtsp stream. This will be able to be accessed from rtsp://<server_ip>/back
     caps: video/x-raw,framerate=10/1,width=640,height=480  # Set the caps to be applied after getting the ROS Image and before the x265 encoder.
