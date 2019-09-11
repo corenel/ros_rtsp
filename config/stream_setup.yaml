@@ -13,4 +13,3 @@ streams: # Cannot rename - must leave this as is.
     mountpoint: /back
     caps: video/x-raw,framerate=10/1,width=640,height=480
     bitrate: 500
-  
